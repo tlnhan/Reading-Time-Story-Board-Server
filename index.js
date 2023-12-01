@@ -1,15 +1,16 @@
 const express = require("express");
-const cors = require("cors");
-const connectDatabase = require("./src/database/mongoose");
-
-require("dotenv").config();
-
 const app = express();
+const cors = require("cors");
+const routes = require("./src/routers/routes");
 
 app.use(cors());
 app.use(express.json());
 
-connectDatabase();
+const sql = require('mssql');
+
+require("dotenv").config();
+
+app.use("/api", routes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}.`);
