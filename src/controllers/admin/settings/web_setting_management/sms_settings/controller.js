@@ -1,20 +1,16 @@
 const mssql = require("mssql");
 const connectDatabase = require("../../../../../database/mssql");
 
-exports.MailSettings = async (req, res) => {
+exports.SMSSettings = async (req, res) => {
   try {
     const {
       Action,
       Id,
-      Email_Sending_Address,
-      Email_Receiving_Address,
-      Content,
-      SMTP_Host,
-      SMTP_Port,
-      SMTP_Security,
-      SMTP_Authentication_Required,
-      SMTP_User_Id,
-      SMTP_User_Password,
+      API_Key,
+      API_Secret,
+      Sender_Number,
+      Sender_Id,
+      Send_SMS_Failure,
     } = req.body;
 
     const pool = await mssql.connect(connectDatabase);
@@ -23,16 +19,12 @@ exports.MailSettings = async (req, res) => {
       .request()
       .input("Action", mssql.VarChar(20), Action)
       .input("Id", mssql.Int, Id)
-      .input("Email_Sending_Address", mssql.NVarChar(50), Email_Sending_Address)
-      .input("Email_Receiving_Address",mssql.NVarChar(50),Email_Receiving_Address)
-      .input("Content", mssql.VarChar(255), Content)
-      .input("SMTP_Host", mssql.NVarChar(50), SMTP_Host )
-      .input("SMTP_Port", mssql.Int, SMTP_Port )
-      .input("SMTP_Security", mssql.NVarChar(50), SMTP_Security)
-      .input("SMTP_Authentication_Required", mssql.Bit, SMTP_Authentication_Required)
-      .input("SMTP_User_Id", mssql.NVarChar(50), SMTP_User_Id)
-      .input("SMTP_User_Password", mssql.NVarChar(50), SMTP_User_Password)
-      .execute("sp_Mail_Settings");
+      .input("API_Key", mssql.VarChar(250), API_Key)
+      .input("API_Secret", mssql.VarChar(250), API_Secret )
+      .input("Sender_Number", mssql.Int, Sender_Number)
+      .input("Sender_Id", mssql.VarChar(250), Sender_Id)
+      .input("Send_SMS_Failure", mssql.Bit, Send_SMS_Failure)
+      .execute("sp_SMS_Settings");
 
     if (Action === "GET") {
       if (result.recordset.length > 0) {

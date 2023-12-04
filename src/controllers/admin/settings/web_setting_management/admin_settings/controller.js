@@ -1,20 +1,21 @@
 const mssql = require("mssql");
 const connectDatabase = require("../../../../../database/mssql");
 
-exports.MailSettings = async (req, res) => {
+exports.AdminSettings = async (req, res) => {
   try {
     const {
       Action,
       Id,
-      Email_Sending_Address,
-      Email_Receiving_Address,
-      Content,
-      SMTP_Host,
-      SMTP_Port,
-      SMTP_Security,
-      SMTP_Authentication_Required,
-      SMTP_User_Id,
-      SMTP_User_Password,
+      Name,
+      Zoom_Api_Key,
+      Zoom_Api_Secret,
+      Publishable_Key,
+      Secret_Key,
+      WebHook_Url,
+      Account,
+      Client_Id,
+      Secret,
+      Max_Point_On_Month
     } = req.body;
 
     const pool = await mssql.connect(connectDatabase);
@@ -23,16 +24,17 @@ exports.MailSettings = async (req, res) => {
       .request()
       .input("Action", mssql.VarChar(20), Action)
       .input("Id", mssql.Int, Id)
-      .input("Email_Sending_Address", mssql.NVarChar(50), Email_Sending_Address)
-      .input("Email_Receiving_Address",mssql.NVarChar(50),Email_Receiving_Address)
-      .input("Content", mssql.VarChar(255), Content)
-      .input("SMTP_Host", mssql.NVarChar(50), SMTP_Host )
-      .input("SMTP_Port", mssql.Int, SMTP_Port )
-      .input("SMTP_Security", mssql.NVarChar(50), SMTP_Security)
-      .input("SMTP_Authentication_Required", mssql.Bit, SMTP_Authentication_Required)
-      .input("SMTP_User_Id", mssql.NVarChar(50), SMTP_User_Id)
-      .input("SMTP_User_Password", mssql.NVarChar(50), SMTP_User_Password)
-      .execute("sp_Mail_Settings");
+      .input("Name", mssql.VarChar(50), Name)
+      .input("Zoom_Api_Key", mssql.VarChar(50), Zoom_Api_Key)
+      .input("Zoom_Api_Secret", mssql.VarChar(50), Zoom_Api_Secret)
+      .input("Publishable_Key", mssql.VarChar(50), Publishable_Key)
+      .input("Secret_Key", mssql.VarChar(50), Secret_Key)
+      .input("WebHook_Url", mssql.VarChar(50), WebHook_Url)
+      .input("Account", mssql.VarChar(50), Account)
+      .input("Client_Id", mssql.VarChar(50), Client_Id)
+      .input("Secret", mssql.VarChar(50), Secret)
+      .input("Max_Point_On_Month", mssql.Int, Max_Point_On_Month)
+      .execute("sp_Admin_Settings");
 
     if (Action === "GET") {
       if (result.recordset.length > 0) {

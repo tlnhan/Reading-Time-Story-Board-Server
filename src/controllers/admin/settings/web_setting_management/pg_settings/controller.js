@@ -1,20 +1,17 @@
 const mssql = require("mssql");
 const connectDatabase = require("../../../../../database/mssql");
 
-exports.MailSettings = async (req, res) => {
+exports.PGSettings = async (req, res) => {
   try {
     const {
       Action,
       Id,
-      Email_Sending_Address,
-      Email_Receiving_Address,
-      Content,
-      SMTP_Host,
-      SMTP_Port,
-      SMTP_Security,
-      SMTP_Authentication_Required,
-      SMTP_User_Id,
-      SMTP_User_Password,
+      Merchant_Indentification_Code,
+      API_Key,
+      API_Secret,
+      Regular_Payment_Merchant_Id,
+      PG_Provider,
+      Webhook_Url,
     } = req.body;
 
     const pool = await mssql.connect(connectDatabase);
@@ -23,16 +20,21 @@ exports.MailSettings = async (req, res) => {
       .request()
       .input("Action", mssql.VarChar(20), Action)
       .input("Id", mssql.Int, Id)
-      .input("Email_Sending_Address", mssql.NVarChar(50), Email_Sending_Address)
-      .input("Email_Receiving_Address",mssql.NVarChar(50),Email_Receiving_Address)
-      .input("Content", mssql.VarChar(255), Content)
-      .input("SMTP_Host", mssql.NVarChar(50), SMTP_Host )
-      .input("SMTP_Port", mssql.Int, SMTP_Port )
-      .input("SMTP_Security", mssql.NVarChar(50), SMTP_Security)
-      .input("SMTP_Authentication_Required", mssql.Bit, SMTP_Authentication_Required)
-      .input("SMTP_User_Id", mssql.NVarChar(50), SMTP_User_Id)
-      .input("SMTP_User_Password", mssql.NVarChar(50), SMTP_User_Password)
-      .execute("sp_Mail_Settings");
+      .input(
+        "Merchant_Indentification_Code",
+        mssql.VarChar(50),
+        Merchant_Indentification_Code
+      )
+      .input("API_Key", mssql.VarChar(50), API_Key)
+      .input("API_Secret", mssql.VarChar(50), API_Secret)
+      .input(
+        "Regular_Payment_Merchant_Id",
+        mssql.VarChar(50),
+        Regular_Payment_Merchant_Id
+      )
+      .input("PG_Provider", mssql.VarChar(50), PG_Provider)
+      .input("Webhook_Url", mssql.VarChar(50), Webhook_Url)
+      .execute("sp_PG_Settings");
 
     if (Action === "GET") {
       if (result.recordset.length > 0) {

@@ -6,8 +6,6 @@ const routes = require("./src/routers/routes");
 app.use(cors());
 app.use(express.json());
 
-const sql = require('mssql');
-
 require("dotenv").config();
 
 app.use("/api", routes);
