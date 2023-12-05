@@ -1,18 +1,27 @@
 const mssql = require("mssql");
 const connectDatabase = require("../../../../database/mssql");
 
-exports.HolidayManagement = async (req, res) => {
+exports.AccountRole = async (req, res) => {
   try {
     const {
       Action,
       Id,
-      Name,
-      Start_Date,
-      End_Date,
-      Annual_Repeat,
-      Usage_Status,
-      Registration_Date,
+      Approval,
+      Role,
       Country,
+      Name,
+      Email,
+      Password,
+      Phone,
+      Registration_Date,
+      Recent_Login,
+      Gender,
+      Nickname,
+      Birth,
+      Contract_Type,
+      Contract,
+      Start_Date,
+      Authority_Type,
     } = req.body;
 
     const pool = await mssql.connect(connectDatabase);
@@ -21,14 +30,23 @@ exports.HolidayManagement = async (req, res) => {
       .request()
       .input("Action", mssql.VarChar(20), Action)
       .input("Id", mssql.Int, Id)
-      .input("Name", mssql.VarChar(20), Name)
-      .input("Start_Date", mssql.DateTime, Start_Date)
-      .input("End_Date", mssql.DateTime, End_Date)
-      .input("Annual_Repeat", mssql.Bit, Annual_Repeat)
-      .input("Usage_Status", mssql.Bit, Usage_Status)
-      .input("Registration_Date", mssql.DateTime, Registration_Date)
+      .input("Approval", mssql.VarChar(50), Approval)
+      .input("Role", mssql.VarChar(50), Role)
       .input("Country", mssql.VarChar(50), Country)
-      .execute("sp_Holiday_Management");
+      .input("Name", mssql.VarChar(20), Name)
+      .input("Email", mssql.VarChar(50), Email)
+      .input("Password", mssql.VarChar(50), Password)
+      .input("Phone", mssql.Int, Phone)
+      .input("Registration_Date", mssql.DateTime, Registration_Date)
+      .input("Recent_Login", mssql.DateTime, Recent_Login)
+      .input("Gender", mssql.Bit, Gender)
+      .input("Nickname", mssql.VarChar(50), Nickname)
+      .input("Birth", mssql.DateTime, Birth)
+      .input("Contract_Type", mssql.VarChar(50), Contract_Type)
+      .input("Contract", mssql.VarChar(50), Contract)
+      .input("Start_Date", mssql.DateTime, Start_Date)
+      .input("Authority_Type", mssql.VarChar(50), Authority_Type)
+      .execute("sp_Account_Role");
 
     if (Action === "GET") {
       if (result.recordset.length > 0) {
@@ -41,18 +59,6 @@ exports.HolidayManagement = async (req, res) => {
         res.status(200).json({ message: "Resource created successfully." });
       } else {
         res.status(500).json({ message: "Failed to created resource." });
-      }
-    } else if (Action === "PUT") {
-      if (result.returnValue === 0) {
-        res.status(200).json({ message: "Resource updated successfully." });
-      } else {
-        res.status(500).json({ message: "Failed to update resource." });
-      }
-    } else if (Action === "DELETE") {
-      if (result.returnValue === 0) {
-        res.status(200).json({ message: "Resource deleted successfully." });
-      } else {
-        res.status(500).json({ message: "Failed to deleted resource." });
       }
     }
   } catch (error) {
