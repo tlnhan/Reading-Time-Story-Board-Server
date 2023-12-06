@@ -1,21 +1,24 @@
 const mssql = require("mssql");
 const connectDatabase = require("../../../database/mssql");
 
-exports.Banner = async (req, res) => {
+exports.VacationAndResignationManagement = async (req, res) => {
   try {
     const {
       Action,
       Id,
-      _Date,
-      Banner_Type,
-      _Status,
-      Banner_Name,
-      Making_Slices,
-      Creating_Band_Banners_PopUps,
+      Absence_Request,
+      Vacation_Request,
+      Retirement_Request,
+      Name,
+      Team_Leader,
+      Tl_Confirm,
+      Director_Name,
+      Director_Confirm,
       Title,
-      Insert_Image,
-      Link_Path,
-      _Period,
+      Day,
+      Period,
+      Prove,
+      Reasons
     } = req.body;
 
     const pool = await mssql.connect(connectDatabase);
@@ -24,21 +27,20 @@ exports.Banner = async (req, res) => {
       .request()
       .input("Action", mssql.VarChar(20), Action)
       .input("Id", mssql.Int, Id)
-      .input("_Date", mssql.DateTime, _Date)
-      .input("Banner_Type", mssql.VarChar(50), Banner_Type)
-      .input("_Status", mssql.VarChar(50), _Status)
-      .input("Banner_Name", mssql.VarChar(50), Banner_Name)
-      .input("Making_Slices", mssql.Bit, Making_Slices)
-      .input(
-        "Creating_Band_Banners_PopUps",
-        mssql.Bit,
-        Creating_Band_Banners_PopUps
-      )
+      .input("Absence_Request", mssql.Bit, Absence_Request)
+      .input("Vacation_Request", mssql.Bit, Vacation_Request)
+      .input("Retirement_Request", mssql.Bit, Retirement_Request)
+      .input("Name", mssql.VarChar(50), Name)
+      .input("Team_Leader", mssql.VarChar(50), Team_Leader)
+      .input("Tl_Confirm", mssql.Bit, Tl_Confirm)
+      .input("Director_Name", mssql.VarChar(50), Director_Name)
+      .input("Director_Confirm", mssql.Bit, Director_Confirm)
       .input("Title", mssql.VarChar(50), Title)
-      .input("Insert_Image", mssql.VarChar(50), Insert_Image)
-      .input("Link_Path", mssql.VarChar(50), Link_Path)
-      .input("_Period", mssql.VarChar(50), _Period)
-      .execute("sp_Manage_Banner");
+      .input("Day", mssql.Int, Day)
+      .input("Period", mssql.VarChar(50), Period)
+      .input("Prove", mssql.VarChar(50), Prove)
+      .input("Reasons", mssql.VarChar(250), Reasons)
+      .execute("sp_Vacation_And_Resignation_Management");
 
     if (Action === "GET") {
       if (result.recordset.length > 0) {

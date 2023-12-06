@@ -1,17 +1,17 @@
 const mssql = require("mssql");
-const connectDatabase = require("../../../database/mssql");
+const connectDatabase = require("../../../../database/mssql");
 
-exports.CurriculumContents = async (req, res) => {
+exports.BoardFAQ = async (req, res) => {
   try {
     const {
       Action,
       Id,
-      Unique_No,
-      Curriculum_Title,
-      Subtitle,
-      Description,
-      Division,
-      Whether_To_Use,
+      Category,
+      Title,
+      Usage_Status,
+      _Time,
+      _Description,
+      Image_Attachment
     } = req.body;
 
     const pool = await mssql.connect(connectDatabase);
@@ -20,13 +20,13 @@ exports.CurriculumContents = async (req, res) => {
       .request()
       .input("Action", mssql.VarChar(20), Action)
       .input("Id", mssql.Int, Id)
-      .input("Unique_No", mssql.VarChar(50), Unique_No)
-      .input("Curriculum_Title", mssql.VarChar(50), Curriculum_Title)
-      .input("Subtitle", mssql.VarChar(50), Subtitle)
-      .input("Description", mssql.VarChar(mssql.MAX), Description)
-      .input("Division", mssql.VarChar(50), Division)
-      .input("Whether_To_Use", mssql.Bit, Whether_To_Use)
-      .execute("sp_Curriculum_Contents");
+      .input("Category", mssql.VarChar(50), Category)
+      .input("Title", mssql.VarChar(50), Title)
+      .input("Usage_Status", mssql.Bit, Usage_Status)
+      .input("_Time", mssql.DateTime, _Time)
+      .input("_Description", mssql.NVarChar(250), _Description)
+      .input("Image_Attachment", mssql.VarChar(250), Image_Attachment)
+      .execute("sp_Manage_Banner_FAQ");
 
     if (Action === "GET") {
       if (result.recordset.length > 0) {
@@ -39,6 +39,12 @@ exports.CurriculumContents = async (req, res) => {
         res.status(200).json({ message: `Resource created successfully.` });
       } else {
         res.status(500).json({ message: `Failed to create resource.` });
+      }
+    } else if (Action === "PUT") {
+      if (result.returnValue === 0) {
+        res.status(200).json({ message: `Resource updated successfully.` });
+      } else {
+        res.status(500).json({ message: `Failed to update resource.` });
       }
     }
   } catch (error) {

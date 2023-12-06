@@ -51,5 +51,83 @@ router.use("/account/role", accountRoleRouter);
 // Account - User
 const accountUserRouter = require("./admin/account/user/routes");
 router.use("/account/user", accountUserRouter);
+// Account - Teacher
+const accountTeacherRouter = require("./admin/account/teacher/routes");
+router.use("/account/teacher", accountTeacherRouter);
+
+// Working Hours
+const workingHoursRouter = require("./admin/working_hours/routes");
+router.use("/workingHours", workingHoursRouter);
+
+// Vacation and Resignation Management
+const vacationAndResignationManagementRouter = require("./admin/vacation_and_registration_management/routes");
+router.use(
+  "/vacationAndResignationManagement",
+  vacationAndResignationManagementRouter
+);
+
+// Point and Penalty Management
+const pointAndPenaltyManagementRouter = require("./admin/point_and_penalty_management/routes");
+router.use("/pointAndPenaltyManagement", pointAndPenaltyManagementRouter);
+
+// Class Feedback
+const classFeedbackRouter = require("./admin/class_feedback/routes");
+router.use("/classFeedback", classFeedbackRouter);
+
+// Payment
+const paymentRouter = require("./admin/payment/routes");
+router.use("/payment", paymentRouter)
+
+// Book Contents
+const bookContentsRouter = require("./admin/book/routes");
+router.use("/bookContents", bookContentsRouter);
+
+// Curriculum Contents
+const curriculumContentsRouter = require("./admin/curriculum/routes");
+router.use("/curriculumContents", curriculumContentsRouter);
+
+// Regular Product
+const regularProductRouter = require("./admin/regular_product/routes");
+router.use("/regularProduct", regularProductRouter);
+
+// Free Trial Product
+const freeTrialProductRouter = require("./admin/free_trial_product/routes");
+router.use("/freeTrialProduct", freeTrialProductRouter);
+
+// Payment Management
+const paymentManagmentRouter = require("./admin/payment_management/routes");
+router.use("/paymentManagement", paymentManagmentRouter);
+
+// Assignment Regular
+const assignmentRegularRouter = require("./admin/assignment_regular/routes");
+router.use("/assignmentRegular", assignmentRegularRouter);
+
+// Regular Class
+const regularClassRouter = require("./admin/regular_class/routes");
+router.use("/regularClass", regularClassRouter);
+
+// Free Trial Class
+const freeTrialClassRouter = require("./admin/free_trial_class/routes");
+router.use("/freeTrialClass", freeTrialClassRouter);
+
+// Coupon
+const couponRouter = require("./admin/coupon/routes");
+router.use("/coupon", couponRouter);
+
+// Banner
+const bannerRouter = require("./admin/banner/routes");
+router.use("/banner", bannerRouter);
+
+// Board Notice
+const boardNoticeRouter = require("./admin/board/notice/routes");
+router.use("/board/notice", boardNoticeRouter);
+
+// Board FQA
+const boardFAQRouter = require("./admin/board/faq/routes");
+router.use("/board/faq", boardFAQRouter);
+
+// Board Support
+const boardSupportRouter = require("./admin/board/support/routes");
+router.use("/board/support", boardSupportRouter);
 
 module.exports = router;

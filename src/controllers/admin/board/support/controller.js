@@ -1,17 +1,18 @@
 const mssql = require("mssql");
-const connectDatabase = require("../../../database/mssql");
+const connectDatabase = require("../../../../database/mssql");
 
-exports.CurriculumContents = async (req, res) => {
+exports.BoardSupport = async (req, res) => {
   try {
     const {
       Action,
       Id,
-      Unique_No,
-      Curriculum_Title,
-      Subtitle,
-      Description,
-      Division,
-      Whether_To_Use,
+      _Name,
+      Email,
+      Category,
+      Title,
+      _Status,
+      _Time,
+      _Description,
     } = req.body;
 
     const pool = await mssql.connect(connectDatabase);
@@ -20,13 +21,14 @@ exports.CurriculumContents = async (req, res) => {
       .request()
       .input("Action", mssql.VarChar(20), Action)
       .input("Id", mssql.Int, Id)
-      .input("Unique_No", mssql.VarChar(50), Unique_No)
-      .input("Curriculum_Title", mssql.VarChar(50), Curriculum_Title)
-      .input("Subtitle", mssql.VarChar(50), Subtitle)
-      .input("Description", mssql.VarChar(mssql.MAX), Description)
-      .input("Division", mssql.VarChar(50), Division)
-      .input("Whether_To_Use", mssql.Bit, Whether_To_Use)
-      .execute("sp_Curriculum_Contents");
+      .input("_Name", mssql.NVarChar(50), _Name)
+      .input("Email", mssql.VarChar(50), Email)
+      .input("Category", mssql.VarChar(50), Category)
+      .input("Title", mssql.VarChar(50), Title)
+      .input("_Status", mssql.Bit, _Status)
+      .input("_Time", mssql.DateTime, _Time)
+      .input("_Description", mssql.NVarChar(mssql.MAX), _Description)
+      .execute("sp_Manage_Board_Support");
 
     if (Action === "GET") {
       if (result.recordset.length > 0) {

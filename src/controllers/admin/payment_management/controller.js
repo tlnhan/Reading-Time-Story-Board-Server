@@ -1,21 +1,22 @@
 const mssql = require("mssql");
 const connectDatabase = require("../../../database/mssql");
 
-exports.Banner = async (req, res) => {
+exports.PaymentManagement = async (req, res) => {
   try {
     const {
       Action,
       Id,
-      _Date,
-      Banner_Type,
+      Bill,
+      Product_Division,
+      Country,
+      Price,
+      Payment_Method,
+      Payer,
+      Student_Name,
+      PG_ID,
+      Billing_Key,
+      Payment_Date,
       _Status,
-      Banner_Name,
-      Making_Slices,
-      Creating_Band_Banners_PopUps,
-      Title,
-      Insert_Image,
-      Link_Path,
-      _Period,
     } = req.body;
 
     const pool = await mssql.connect(connectDatabase);
@@ -24,21 +25,18 @@ exports.Banner = async (req, res) => {
       .request()
       .input("Action", mssql.VarChar(20), Action)
       .input("Id", mssql.Int, Id)
-      .input("_Date", mssql.DateTime, _Date)
-      .input("Banner_Type", mssql.VarChar(50), Banner_Type)
-      .input("_Status", mssql.VarChar(50), _Status)
-      .input("Banner_Name", mssql.VarChar(50), Banner_Name)
-      .input("Making_Slices", mssql.Bit, Making_Slices)
-      .input(
-        "Creating_Band_Banners_PopUps",
-        mssql.Bit,
-        Creating_Band_Banners_PopUps
-      )
-      .input("Title", mssql.VarChar(50), Title)
-      .input("Insert_Image", mssql.VarChar(50), Insert_Image)
-      .input("Link_Path", mssql.VarChar(50), Link_Path)
-      .input("_Period", mssql.VarChar(50), _Period)
-      .execute("sp_Manage_Banner");
+      .input("Bill", mssql.VarChar(50), Bill)
+      .input("Product_Division", mssql.VarChar(50), Product_Division)
+      .input("Country", mssql.VarChar(50), Country)
+      .input("Price", mssql.Int, Price)
+      .input("Payment_Method", mssql.VarChar(50), Payment_Method)
+      .input("Payer", mssql.VarChar(50), Payer)
+      .input("Student_Name", mssql.VarChar(50), Student_Name)
+      .input("PG_ID", mssql.VarChar(50), PG_ID)
+      .input("Billing_Key", mssql.VarChar(50), Billing_Key)
+      .input("Payment_Date", mssql.DateTime, Payment_Date)
+      .input("_Status", mssql.Bit, _Status)
+      .execute("sp_Payment_Management");
 
     if (Action === "GET") {
       if (result.recordset.length > 0) {

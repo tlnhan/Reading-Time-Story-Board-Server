@@ -1,11 +1,11 @@
 const mssql = require("mssql");
 const connectDatabase = require("../../../database/mssql");
 
-exports.ClassFeedback = async (req, res) => {
+exports.Payment = async (req, res) => {
   try {
     const pool = await mssql.connect(connectDatabase);
 
-    const result = await pool.request().execute("sp_Class_Feedback");
+    const result = await pool.request().execute("sp_Payment");
 
     if (result.recordset.length > 0) {
       res.status(200).json(result.recordset);
