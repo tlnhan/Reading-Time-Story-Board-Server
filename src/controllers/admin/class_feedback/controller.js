@@ -3,9 +3,13 @@ const connectDatabase = require("../../../database/mssql");
 
 exports.ClassFeedback = async (req, res) => {
   try {
+    const { Teacher } = req.body;
+
     const pool = await mssql.connect(connectDatabase);
 
-    const result = await pool.request().execute("sp_Class_Feedback");
+    const result = await pool.request()
+    .input("Teacher", mssql.NVarChar(50), Teacher)
+    .execute("sp_Class_Feedback")
 
     if (result.recordset.length > 0) {
       res.status(200).json(result.recordset);

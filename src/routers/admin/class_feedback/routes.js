@@ -3,6 +3,6 @@ const classFeedbackController = require("../../../controllers/admin/class_feedba
 
 const router = express.Router();
 
-router.get("/", classFeedbackController.ClassFeedback);
+router.post("/", classFeedbackController.ClassFeedback);
 
 module.exports = router;

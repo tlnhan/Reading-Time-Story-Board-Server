@@ -10,27 +10,10 @@ exports.WorkingHours = async (req, res) => {
       Team_Leader,
       Teacher,
       Teacher_NickName,
-      Sun,
-      Mon,
-      Tue,
-      Wed,
-      Thu,
-      Fri,
-      Sat,
-      Sun_Start,
-      Sun_End,
-      Mon_Start,
-      Mon_End,
-      Tue_Start,
-      Tue_End,
-      Wed_Start,
-      Wed_End,
-      Thu_Start,
-      Thu_End,
-      Fri_Start,
-      Fri_End,
-      Sat_Start,
-      Sat_End,
+      Today,
+      Start_Time,
+      End_Time,
+      Date
     } = req.body;
 
     const pool = await mssql.connect(connectDatabase);
@@ -43,27 +26,10 @@ exports.WorkingHours = async (req, res) => {
       .input("Team_Leader", mssql.VarChar(50), Team_Leader)
       .input("Teacher", mssql.VarChar(50), Teacher)
       .input("Teacher_NickName", mssql.VarChar(50), Teacher_NickName)
-      .input("Sun", mssql.Bit, Sun)
-      .input("Mon", mssql.Bit, Mon)
-      .input("Tue", mssql.Bit, Tue)
-      .input("Wed", mssql.Bit, Wed)
-      .input("Thu", mssql.Bit, Thu)
-      .input("Fri", mssql.Bit, Fri)
-      .input("Sat", mssql.Bit, Sat)
-      .input("Sun_Start", mssql.Time, Sun_Start)
-      .input("Sun_End", mssql.Time, Sun_End)
-      .input("Mon_Start", mssql.Time, Mon_Start)
-      .input("Mon_End", mssql.Time, Mon_End)
-      .input("Tue_Start", mssql.Time, Tue_Start)
-      .input("Tue_End", mssql.Time, Tue_End)
-      .input("Wed_Start", mssql.Time, Wed_Start)
-      .input("Wed_End", mssql.Time, Wed_End)
-      .input("Thu_Start", mssql.Time, Thu_Start)
-      .input("Thu_End", mssql.Time, Thu_End)
-      .input("Fri_Start", mssql.Time, Fri_Start)
-      .input("Fri_End", mssql.Time, Fri_End)
-      .input("Sat_Start", mssql.Time, Sat_Start)
-      .input("Sat_End", mssql.Time, Sat_End)
+      .input("Today", mssql.NVarChar(10), Today)
+      .input("Start_Time", mssql.Time, Start_Time)
+      .input("End_Time", mssql.Time, End_Time)
+      .input("Date", mssql.Date, Date)
       .execute("sp_Working_Hours");
 
     if (Action === "GET") {
