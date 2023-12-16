@@ -3,13 +3,7 @@ const connectDatabase = require("../../../../database/mssql");
 
 exports.MenuPermissionManagement = async (req, res) => {
   try {
-    const {
-      Action,
-      Id,
-        Role,
-        Slug,
-        Apply
-    } = req.body;
+    const { Action, Id, Role, Slug, Apply } = req.body;
 
     const pool = await mssql.connect(connectDatabase);
 

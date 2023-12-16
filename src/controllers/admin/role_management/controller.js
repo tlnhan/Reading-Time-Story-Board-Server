@@ -1,7 +1,7 @@
 const mssql = require("mssql");
-const connectDatabase = require("../../../../database/mssql");
+const connectDatabase = require("../../../database/mssql");
 
-exports.AccountRole = async (req, res) => {
+exports.RoleManagement = async (req, res) => {
   try {
     const {
       Action,
@@ -46,9 +46,15 @@ exports.AccountRole = async (req, res) => {
       .input("Contract", mssql.VarChar(50), Contract)
       .input("Start_Date", mssql.DateTime, Start_Date)
       .input("Authority_Type", mssql.VarChar(50), Authority_Type)
-      .execute("sp_Account_Role");
+      .execute("sp_Role_Management");
 
     if (Action === "GET") {
+      if (result.recordset.length > 0) {
+        res.status(200).json(result.recordset);
+      } else {
+        res.status(404).json({ message: "Not found materials." });
+      }
+    } else if (Action === "DETAIL") {
       if (result.recordset.length > 0) {
         res.status(200).json(result.recordset);
       } else {
@@ -58,7 +64,13 @@ exports.AccountRole = async (req, res) => {
       if (result.returnValue === 0) {
         res.status(200).json({ message: "Resource created successfully." });
       } else {
-        res.status(500).json({ message: "Failed to created resource." });
+        res.status(500).json({ message: "Failed to create resource." });
+      }
+    } else if (Action === "SEARCH") {
+      if (result.recordset.length > 0) {
+        res.status(200).json(result.recordset);
+      } else {
+        res.status(500).json({ message: "Not found materials." });
       }
     }
   } catch (error) {

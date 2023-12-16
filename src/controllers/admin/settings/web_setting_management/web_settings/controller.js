@@ -27,6 +27,12 @@ exports.WebSettings = async (req, res) => {
       } else {
         res.status(400).json({ message: "Failed to update resource." });
       }
+    } else if (Action === "DELETE") {
+      if (result.returnValue === 0) {
+        res.status(200).json({ message: "Resource deleted successfully." });
+      } else {
+        res.status(400).json({ message: "Failed to delete resource." });
+      }
     }
   } catch (error) {
     console.log(error);

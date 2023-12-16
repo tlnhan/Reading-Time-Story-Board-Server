@@ -15,7 +15,11 @@ exports.AdminSettings = async (req, res) => {
       Account,
       Client_Id,
       Secret,
-      Max_Point_On_Month
+      Max_Point_On_Month,
+      Main_Menu_PC,
+      Main_Menu_Mobile,
+      Main_Page_Product,
+      Free_Trial_Product,
     } = req.body;
 
     const pool = await mssql.connect(connectDatabase);
@@ -34,6 +38,10 @@ exports.AdminSettings = async (req, res) => {
       .input("Client_Id", mssql.VarChar(50), Client_Id)
       .input("Secret", mssql.VarChar(50), Secret)
       .input("Max_Point_On_Month", mssql.Int, Max_Point_On_Month)
+      .input("Main_Menu_PC", mssql.VarChar(50), Main_Menu_PC)
+      .input("Main_Menu_Mobile", mssql.VarChar(50), Main_Menu_Mobile)
+      .input("Main_Page_Product", mssql.VarChar(50), Main_Page_Product)
+      .input("Free_Trial_Product", mssql.VarChar(50), Free_Trial_Product)
       .execute("sp_Admin_Settings");
 
     if (Action === "GET") {

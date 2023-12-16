@@ -13,6 +13,7 @@ exports.HolidayManagement = async (req, res) => {
       Usage_Status,
       Registration_Date,
       Country,
+      Search_Year,
     } = req.body;
 
     const pool = await mssql.connect(connectDatabase);
@@ -28,6 +29,7 @@ exports.HolidayManagement = async (req, res) => {
       .input("Usage_Status", mssql.Bit, Usage_Status)
       .input("Registration_Date", mssql.DateTime, Registration_Date)
       .input("Country", mssql.VarChar(50), Country)
+      .input("Search_Year", mssql.Int, Search_Year)
       .execute("sp_Holiday_Management");
 
     if (Action === "GET") {
@@ -53,6 +55,14 @@ exports.HolidayManagement = async (req, res) => {
         res.status(200).json({ message: "Resource deleted successfully." });
       } else {
         res.status(500).json({ message: "Failed to deleted resource." });
+      }
+    } else if (Action === "SEARCH") {
+      if (result.recordset.length > 0) {
+        res.status(200).json(result.recordset);
+      } else {
+        res
+          .status(404)
+          .json({ message: "No records found for the specified year." });
       }
     }
   } catch (error) {

@@ -2,7 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 
-// SETTINGS
+// Admin
 
 // Settings - Web setting Management
 const webSettingsRouter = require("./admin/settings/web_setting_management/web_settings/routes");
@@ -46,8 +46,8 @@ router.use(
 
 // ACCOUNT
 // Account - Role
-const accountRoleRouter = require("./admin/account/role/routes");
-router.use("/account/role", accountRoleRouter);
+const roleManagementRouter = require("./admin/role_management/routes");
+router.use("/roleManagement", roleManagementRouter);
 // Account - User
 const accountUserRouter = require("./admin/account/user/routes");
 router.use("/account/user", accountUserRouter);
@@ -129,5 +129,12 @@ router.use("/board/faq", boardFAQRouter);
 // Board Support
 const boardSupportRouter = require("./admin/board/support/routes");
 router.use("/board/support", boardSupportRouter);
+
+
+
+
+// Teacher
+
+
 
 module.exports = router;
