@@ -3,6 +3,7 @@ const connectDatabase = require("../../../database/mssql");
 const connectCloud = require("../../../database/cloudinary");
 const exceljs = require("exceljs");
 const { Readable } = require("stream");
+require("dotenv").config();
 
 exports.RoleManagement = async (req, res) => {
   try {
@@ -122,7 +123,7 @@ exports.RoleManagement = async (req, res) => {
 
       const uploadStream = connectCloud.uploader.upload_stream(
         {
-          folder: "reading-time-storyboard/excel/role_management",
+          folder: process.env.CLOUD_FOLDER,
           resource_type: "auto",
           public_id: excelFileName,
         },
