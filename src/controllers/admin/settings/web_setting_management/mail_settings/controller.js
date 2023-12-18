@@ -8,7 +8,7 @@ exports.MailSettings = async (req, res) => {
       Id,
       Email_Sending_Address,
       Email_Receiving_Address,
-      Content,
+      _Content,
       Upload_Email_Template,
       SMTP_Host,
       SMTP_Port,
@@ -30,7 +30,7 @@ exports.MailSettings = async (req, res) => {
         mssql.NVarChar(50),
         Email_Receiving_Address
       )
-      .input("Content", mssql.VarChar(255), Content)
+      .input("_Content", mssql.VarChar(255), _Content)
       .input("Upload_Email_Template", mssql.VarChar(50), Upload_Email_Template)
       .input("SMTP_Host", mssql.NVarChar(50), SMTP_Host)
       .input("SMTP_Port", mssql.Int, SMTP_Port)
