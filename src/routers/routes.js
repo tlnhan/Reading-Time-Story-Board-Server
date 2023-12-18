@@ -86,6 +86,10 @@ router.use("/bookContents", bookContentsRouter);
 const curriculumContentsRouter = require("./admin/curriculum/routes");
 router.use("/curriculumContents", curriculumContentsRouter);
 
+// Curriculum Book Relationships
+const curriculumBookRelationshipsRouter = require("./admin/curriculum/curriculum_book_relationships/routes");
+router.use("/curriculumBookRelationships", curriculumBookRelationshipsRouter);
+
 // Regular Product
 const regularProductRouter = require("./admin/regular_product/routes");
 router.use("/regularProduct", regularProductRouter);
@@ -133,8 +137,9 @@ router.use("/board/support", boardSupportRouter);
 
 
 
-// Teacher
-
+// Country
+const countryRouter = require("./country/routes");
+router.use("/country", countryRouter);
 
 
 module.exports = router;

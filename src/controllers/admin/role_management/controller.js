@@ -76,7 +76,7 @@ exports.RoleManagement = async (req, res) => {
       } else {
         res.status(500).json({ message: "Not found materials." });
       }
-    } else if (Action === "EXCEL") {
+    } else if (Action === "EXPORT") {
       const workbook = new exceljs.Workbook();
       const worksheet = workbook.addWorksheet("Role_Management");
 
@@ -123,7 +123,7 @@ exports.RoleManagement = async (req, res) => {
 
       const uploadStream = connectCloud.uploader.upload_stream(
         {
-          folder: process.env.CLOUD_FOLDER,
+          folder: process.env.CLOUD_ROLE_MANAGEMENT_EXCEL,
           resource_type: "auto",
           public_id: excelFileName,
         },

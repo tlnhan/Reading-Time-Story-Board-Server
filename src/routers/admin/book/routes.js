@@ -3,6 +3,6 @@ const bookContentsController = require("../../../controllers/admin/book/controll
 
 const router = express.Router();
 
-router.post("/", bookContentsController.BookContents);
+router.post("/", bookContentsController.BookContent);
 
 module.exports = router;
