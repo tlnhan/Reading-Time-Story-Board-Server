@@ -23,7 +23,8 @@ exports.RegularProduct = async (req, res) => {
       Expiration_Date,
       Images_Url: imageBuffer,
       Days,
-      Study_Time
+      Study_Time,
+      Product_Division
     } = req.body;
 
     const uploadResponse = await connectCloud.uploader.upload(imageBuffer, {
@@ -53,6 +54,7 @@ exports.RegularProduct = async (req, res) => {
       .input("Images_Url", mssql.VarChar(mssql.MAX), cloudinaryUrl)
       .input("Days", mssql.Int, Days)
       .input("Study_Time", mssql.Int, Study_Time)
+      .input("Product_Division", mssql.VarChar(20), Product_Division)
       .execute("sp_Regular_Product");
 
     if (Action === "GET") {

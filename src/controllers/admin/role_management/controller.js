@@ -11,9 +11,9 @@ exports.RoleManagement = async (req, res) => {
       Action,
       Id,
       Approval,
-      Role,
+      _Role,
       Country,
-      Name,
+      _Name,
       Email,
       Password,
       Phone,
@@ -23,8 +23,8 @@ exports.RoleManagement = async (req, res) => {
       Nickname,
       Birth,
       Contract_Type,
-      Contract,
-      Start_Date,
+      _Contract,
+      _Start_Date,
       Authority_Type,
     } = req.body;
 
@@ -35,9 +35,9 @@ exports.RoleManagement = async (req, res) => {
       .input("Action", mssql.VarChar(20), Action)
       .input("Id", mssql.Int, Id)
       .input("Approval", mssql.VarChar(50), Approval)
-      .input("Role", mssql.VarChar(50), Role)
+      .input("_Role", mssql.VarChar(50), _Role)
       .input("Country", mssql.VarChar(50), Country)
-      .input("Name", mssql.VarChar(20), Name)
+      .input("_Name", mssql.VarChar(20), _Name)
       .input("Email", mssql.VarChar(50), Email)
       .input("Password", mssql.VarChar(50), Password)
       .input("Phone", mssql.Int, Phone)
@@ -47,8 +47,8 @@ exports.RoleManagement = async (req, res) => {
       .input("Nickname", mssql.VarChar(50), Nickname)
       .input("Birth", mssql.DateTime, Birth)
       .input("Contract_Type", mssql.VarChar(50), Contract_Type)
-      .input("Contract", mssql.VarChar(50), Contract)
-      .input("Start_Date", mssql.DateTime, Start_Date)
+      .input("_Contract", mssql.VarChar(50), _Contract)
+      .input("_Start_Date", mssql.DateTime, _Start_Date)
       .input("Authority_Type", mssql.VarChar(50), Authority_Type)
       .execute("sp_Role_Management");
 

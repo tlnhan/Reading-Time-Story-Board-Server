@@ -31,7 +31,7 @@ exports.MailSettings = async (req, res) => {
         Email_Receiving_Address
       )
       .input("_Content", mssql.VarChar(255), _Content)
-      .input("Upload_Email_Template", mssql.VarChar(50), Upload_Email_Template)
+      .input("Upload_Email_Template", mssql.VarChar(mssql.MAX), Upload_Email_Template)
       .input("SMTP_Host", mssql.NVarChar(50), SMTP_Host)
       .input("SMTP_Port", mssql.Int, SMTP_Port)
       .input("SMTP_Security", mssql.NVarChar(50), SMTP_Security)

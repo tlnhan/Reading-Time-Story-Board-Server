@@ -77,19 +77,19 @@ exports.BookContent = async (req, res) => {
       }
     } else if (Action === "POST") {
       if (req.file) {
-        let coverImageResult;
-        let attachmentsResult;
         upload.single("file")(req, res, async (err) => {
           if (err) {
             return res.status(400).json({ message: "Error uploading file." });
           } else {
+            let coverImageResult;
+            let attachmentsResult;
+
             if (Attachments && req.file && !isValidFileType(req.file.buffer)) {
               return res.status(400).json({
                 message:
                   "Invalid file type for Attachments. Allowed types: PDF, images, documents.",
               });
             }
-
             const currentDate = new Date().toISOString().replace(/:/g, "-");
             const coverImageName = `Cover_Image_${currentDate}`;
 

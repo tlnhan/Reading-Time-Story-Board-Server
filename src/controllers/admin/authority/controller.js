@@ -1,19 +1,16 @@
 const mssql = require("mssql");
-const connectDatabase = require("../../database/mssql");
+const connectDatabase = require("../../../database/mssql");
 
-exports.Country = async (req, res) => {
+exports.Authority = async (req, res) => {
   try {
-    const { Action, Name, Currency, Id } = req.body;
+    const { Action } = req.body;
 
     const pool = await mssql.connect(connectDatabase);
 
     const result = await pool
       .request()
       .input("Action", mssql.VarChar(20), Action)
-      .input("Name", mssql.VarChar(20), Name)
-      .input("Currency", mssql.VarChar(20), Currency)
-      .input("Id", mssql.Int, Id)
-      .execute("sp_Country");
+      .execute("sp_Authority");
 
     if (Action === "GET") {
       if (result.recordset.length > 0) {

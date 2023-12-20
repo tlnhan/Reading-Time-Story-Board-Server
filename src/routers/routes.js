@@ -141,5 +141,8 @@ router.use("/board/support", boardSupportRouter);
 const countryRouter = require("./country/routes");
 router.use("/country", countryRouter);
 
+// Authority
+const authorityRouter = require("./admin/authority/routes");
+router.use("/admin/authority", authorityRouter)
 
 module.exports = router;
