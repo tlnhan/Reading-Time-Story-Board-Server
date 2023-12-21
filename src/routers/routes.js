@@ -44,27 +44,14 @@ router.use(
   menuPermissionManagementRouter
 );
 
-// ACCOUNT
-// Account - Role
-const roleManagementRouter = require("./admin/role_management/routes");
-router.use("/roleManagement", roleManagementRouter);
-// Account - User
-const accountUserRouter = require("./admin/account/user/routes");
+// Study_Time
+const studyTimeRouter = require("./study_time/routes");
+router.use("/studyTime", studyTimeRouter);
+
+// User Management
+// Account
+const accountUserRouter = require("./admin/user_management/routes");
 router.use("/account/user", accountUserRouter);
-// Account - Teacher
-const accountTeacherRouter = require("./admin/account/teacher/routes");
-router.use("/account/teacher", accountTeacherRouter);
-
-// Working Hours
-const workingHoursRouter = require("./admin/working_hours/routes");
-router.use("/workingHours", workingHoursRouter);
-
-// Vacation and Resignation Management
-const vacationAndResignationManagementRouter = require("./admin/vacation_and_registration_management/routes");
-router.use(
-  "/vacationAndResignationManagement",
-  vacationAndResignationManagementRouter
-);
 
 // Point and Penalty Management
 const pointAndPenaltyManagementRouter = require("./admin/point_and_penalty_management/routes");
@@ -76,7 +63,7 @@ router.use("/classFeedback", classFeedbackRouter);
 
 // Payment
 const paymentRouter = require("./admin/payment/routes");
-router.use("/payment", paymentRouter)
+router.use("/payment", paymentRouter);
 
 // Book Contents
 const bookContentsRouter = require("./admin/book/routes");
@@ -134,15 +121,30 @@ router.use("/board/faq", boardFAQRouter);
 const boardSupportRouter = require("./admin/board/support/routes");
 router.use("/board/support", boardSupportRouter);
 
-
-
-
 // Country
 const countryRouter = require("./country/routes");
 router.use("/country", countryRouter);
 
 // Authority
 const authorityRouter = require("./admin/authority/routes");
-router.use("/admin/authority", authorityRouter)
+router.use("/admin/authority", authorityRouter);
+
+// Teacher Management
+// Account
+const accountTeacherRouter = require("./admin/teacher_management/account/routes");
+router.use("/account/teacher", accountTeacherRouter);
+// Working Hours
+const workingHoursRouter = require("./admin/teacher_management/working_hours/routes");
+router.use("/workingHours", workingHoursRouter);
+// Vacation and Resignation Management
+const vacationAndResignationManagementRouter = require("./admin/teacher_management/vacation_and_registration_management/routes");
+router.use(
+  "/vacationAndResignationManagement",
+  vacationAndResignationManagementRouter
+);
+
+// Role Management
+const roleManagementRouter = require("./admin/role_management/routes");
+router.use("/roleManagement", roleManagementRouter);
 
 module.exports = router;

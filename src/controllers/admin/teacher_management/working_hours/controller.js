@@ -1,5 +1,5 @@
 const mssql = require("mssql");
-const connectDatabase = require("../../../database/mssql");
+const connectDatabase = require("../../../../database/mssql");
 
 exports.WorkingHours = async (req, res) => {
   try {
@@ -12,8 +12,7 @@ exports.WorkingHours = async (req, res) => {
       Teacher_NickName,
       Today,
       Start_Time,
-      End_Time,
-      Date
+      End_Time
     } = req.body;
 
     const pool = await mssql.connect(connectDatabase);
@@ -29,7 +28,6 @@ exports.WorkingHours = async (req, res) => {
       .input("Today", mssql.NVarChar(10), Today)
       .input("Start_Time", mssql.Time, Start_Time)
       .input("End_Time", mssql.Time, End_Time)
-      .input("Date", mssql.Date, Date)
       .execute("sp_Working_Hours");
 
     if (Action === "GET") {

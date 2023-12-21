@@ -5,27 +5,30 @@ const exceljs = require("exceljs");
 const { Readable } = require("stream");
 require("dotenv").config();
 
-exports.RoleManagement = async (req, res) => {
+
+exports.AccountUser = async (req, res) => {
   try {
     const {
       Action,
       Id,
-      Approval,
-      _Role,
+      Status,
       Country,
-      _Name,
+      Member,
       Email,
       Password,
+      User_Name,
+      User_English_Name,
+      Gender,
+      Birth,
       Phone,
       Registration_Date,
       Recent_Login,
-      Gender,
-      Nickname,
-      Birth,
-      Contract_Type,
-      _Contract,
-      _Start_Date,
-      Authority_Type,
+      Description,
+      Image,
+      Admission,
+      Tags,
+      Referral_Code,
+      Signup_path,
     } = req.body;
 
     const pool = await mssql.connect(connectDatabase);
@@ -34,31 +37,27 @@ exports.RoleManagement = async (req, res) => {
       .request()
       .input("Action", mssql.VarChar(20), Action)
       .input("Id", mssql.Int, Id)
-      .input("Approval", mssql.VarChar(50), Approval)
-      .input("_Role", mssql.VarChar(50), _Role)
+      .input("Status", mssql.VarChar(50), Status)
       .input("Country", mssql.VarChar(50), Country)
-      .input("_Name", mssql.VarChar(20), _Name)
+      .input("Member", mssql.VarChar(50), Member)
       .input("Email", mssql.VarChar(50), Email)
       .input("Password", mssql.VarChar(50), Password)
-      .input("Phone", mssql.Int, Phone)
+      .input("User_Name", mssql.VarChar(50), User_Name)
+      .input("User_English_Name", mssql.VarChar(50), User_English_Name)
+      .input("Gender", mssql.Bit, Gender)
+      .input("Birth", mssql.DateTime, Birth)
+      .input("Phone", mssql.VarChar(20), Phone)
       .input("Registration_Date", mssql.DateTime, Registration_Date)
       .input("Recent_Login", mssql.DateTime, Recent_Login)
-      .input("Gender", mssql.Bit, Gender)
-      .input("Nickname", mssql.VarChar(50), Nickname)
-      .input("Birth", mssql.DateTime, Birth)
-      .input("Contract_Type", mssql.VarChar(50), Contract_Type)
-      .input("_Contract", mssql.VarChar(50), _Contract)
-      .input("_Start_Date", mssql.DateTime, _Start_Date)
-      .input("Authority_Type", mssql.VarChar(50), Authority_Type)
-      .execute("sp_Role_Management");
+      .input("Description", mssql.NVarChar(250), Description)
+      .input("Image", mssql.VarChar(50), Image)
+      .input("Admission", mssql.VarChar(50), Admission)
+      .input("Tags", mssql.VarChar(50), Tags)
+      .input("Referral_Code", mssql.VarChar(50), Referral_Code)
+      .input("Signup_path", mssql.VarChar(50), Signup_path)
+      .execute("sp_Account_User");
 
     if (Action === "GET") {
-      if (result.recordset.length > 0) {
-        res.status(200).json(result.recordset);
-      } else {
-        res.status(404).json({ message: "Not found materials." });
-      }
-    } else if (Action === "DETAIL") {
       if (result.recordset.length > 0) {
         res.status(200).json(result.recordset);
       } else {
@@ -68,7 +67,7 @@ exports.RoleManagement = async (req, res) => {
       if (result.returnValue === 0) {
         res.status(200).json({ message: "Resource created successfully." });
       } else {
-        res.status(500).json({ message: "Failed to create resource." });
+        res.status(500).json({ message: "Failed to created resource." });
       }
     } else if (Action === "SEARCH") {
       if (result.recordset.length > 0) {
@@ -78,7 +77,7 @@ exports.RoleManagement = async (req, res) => {
       }
     } else if (Action === "EXPORT") {
       const workbook = new exceljs.Workbook();
-      const worksheet = workbook.addWorksheet("Role_Management");
+      const worksheet = workbook.addWorksheet("User_Account");
 
       const data = result.recordset;
 
@@ -117,13 +116,13 @@ exports.RoleManagement = async (req, res) => {
       ];
 
       const currentDate = new Date().toISOString().replace(/:/g, "-");
-      const excelFileName = `Role_Management_${currentDate}.xlsx`;
+      const excelFileName = `User_Account_${currentDate}.xlsx`;
 
       const excelBuffer = await workbook.xlsx.writeBuffer();
 
       const uploadStream = connectCloud.uploader.upload_stream(
         {
-          folder: process.env.CLOUD_ROLE_MANAGEMENT_EXCEL,
+          folder: process.env.CLOUD_ACCOUNT_USER_EXCEL,
           resource_type: "auto",
           public_id: excelFileName,
         },
@@ -144,12 +143,6 @@ exports.RoleManagement = async (req, res) => {
       bufferStream.push(null);
 
       bufferStream.pipe(uploadStream);
-    } else if (Action === "TEACHER") {
-      if (result.recordset.length > 0) {
-        res.status(200).json(result.recordset);
-      } else {
-        res.status(404).json({ message: "Not found materials." });
-      }
     }
   } catch (error) {
     console.log(error);
