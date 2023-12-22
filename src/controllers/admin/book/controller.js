@@ -107,7 +107,7 @@ exports.BookContent = async (req, res) => {
             attachmentsResult = await connectCloud.uploader.upload(
               req.body.Attachments,
               {
-                folder: process.env.CLOUD_ATTACHMENTS,
+                folder: process.env.CLOUD_ATTACHMENT_EXCEL,
                 resource_type: "auto",
                 public_id: attachmentsName,
               }

@@ -1,5 +1,5 @@
 const express = require("express");
-const pointAndPenaltyManagementController = require("../../../controllers/admin/point_and_penalty_management/controller");
+const pointAndPenaltyManagementController = require("../../../../controllers/admin/teacher_management/point_and_penalty_management/controller");
 
 const router = express.Router();
 

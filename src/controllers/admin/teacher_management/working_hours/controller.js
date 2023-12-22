@@ -12,7 +12,7 @@ exports.WorkingHours = async (req, res) => {
       Teacher_NickName,
       Today,
       Start_Time,
-      End_Time
+      End_Time,
     } = req.body;
 
     const pool = await mssql.connect(connectDatabase);
@@ -47,6 +47,12 @@ exports.WorkingHours = async (req, res) => {
         res.status(200).json({ message: `Resource updated successfully.` });
       } else {
         res.status(500).json({ message: `Failed to update resource.` });
+      }
+    } else if (Action === "SEARCH") {
+      if (result.recordset.length > 0) {
+        res.status(200).json(result.recordset);
+      } else {
+        res.status(404).json({ message: "Not found materials." });
       }
     }
   } catch (error) {
