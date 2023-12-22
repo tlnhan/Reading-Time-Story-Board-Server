@@ -9,6 +9,7 @@ exports.WorkingHours = async (req, res) => {
       Team,
       Team_Leader,
       Teacher,
+      Class_Name,
       Teacher_NickName,
       Today,
       Start_Time,
@@ -24,6 +25,7 @@ exports.WorkingHours = async (req, res) => {
       .input("Team", mssql.VarChar(50), Team)
       .input("Team_Leader", mssql.VarChar(50), Team_Leader)
       .input("Teacher", mssql.VarChar(50), Teacher)
+      .input("Class_Name", mssql.VarChar(50), Class_Name)
       .input("Teacher_NickName", mssql.VarChar(50), Teacher_NickName)
       .input("Today", mssql.NVarChar(10), Today)
       .input("Start_Time", mssql.Time, Start_Time)

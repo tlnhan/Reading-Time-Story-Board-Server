@@ -1,46 +1,40 @@
 const mssql = require("mssql");
-const connectDatabase = require("../../../database/mssql");
-const connectCloud = require("../../../database/cloudinary");
+const connectDatabase = require("../../../../database/mssql");
+const connectCloud = require("../../../../database/cloudinary");
 const exceljs = require("exceljs");
 const { Readable } = require("stream");
 require("dotenv").config();
 
-exports.PaymentManagement = async (req, res) => {
+exports.Payment = async (req, res) => {
   try {
     const {
       Action,
       Id,
-      Bill,
-      Product_Division,
-      Country,
-      Price,
-      Payment_Method,
-      Payer,
-      Student_Name,
-      PG_ID,
-      Billing_Key,
-      Payment_Date,
-      _Status,
+      TeacherName,
+      Team,
+      Team_Leader,
+      Class_Name,
+      Teacher_NickName,
+      Today,
+      Start_Time,
+      End_Time,
     } = req.body;
 
     const pool = await mssql.connect(connectDatabase);
 
     const result = await pool
       .request()
-      .input("Action", mssql.VarChar(20), Action)
+      .input("Action", mssql.VarChar(10), Action)
+      .input("TeacherName", mssql.VarChar(50), TeacherName)
       .input("Id", mssql.Int, Id)
-      .input("Bill", mssql.VarChar(50), Bill)
-      .input("Product_Division", mssql.VarChar(50), Product_Division)
-      .input("Country", mssql.VarChar(50), Country)
-      .input("Price", mssql.Int, Price)
-      .input("Payment_Method", mssql.VarChar(50), Payment_Method)
-      .input("Payer", mssql.VarChar(50), Payer)
-      .input("Student_Name", mssql.VarChar(50), Student_Name)
-      .input("PG_ID", mssql.VarChar(50), PG_ID)
-      .input("Billing_Key", mssql.VarChar(50), Billing_Key)
-      .input("Payment_Date", mssql.DateTime, Payment_Date)
-      .input("_Status", mssql.Bit, _Status)
-      .execute("sp_Payment_Management");
+      .input("Team", mssql.VarChar(50), Team)
+      .input("Team_Leader", mssql.VarChar(50), Team_Leader)
+      .input("Class_Name", mssql.VarChar(50), Class_Name)
+      .input("Teacher_NickName", mssql.VarChar(50), Teacher_NickName)
+      .input("Today", mssql.NVarChar(10), Today)
+      .input("Start_Time", mssql.Time, Start_Time)
+      .input("End_Time", mssql.Time, End_Time)
+      .execute("sp_Payment_Teacher");
 
     if (Action === "GET") {
       if (result.recordset.length > 0) {
@@ -48,11 +42,11 @@ exports.PaymentManagement = async (req, res) => {
       } else {
         res.status(404).json({ message: "Not found materials." });
       }
-    } else if (Action === "POST") {
-      if (result.returnValue === 0) {
-        res.status(200).json({ message: `Resource created successfully.` });
+    } else if (Action === "WH") {
+      if (result.recordset.length > 0) {
+        res.status(200).json(result.recordset);
       } else {
-        res.status(500).json({ message: `Failed to create resource.` });
+        res.status(404).json({ message: "Not found materials." });
       }
     } else if (Action === "PUT") {
       if (result.returnValue === 0) {
@@ -64,11 +58,11 @@ exports.PaymentManagement = async (req, res) => {
       if (result.recordset.length > 0) {
         res.status(200).json(result.recordset);
       } else {
-        res.status(500).json({ message: "Not found materials." });
+        res.status(404).json({ message: "Not found materials." });
       }
     } else if (Action === "EXPORT") {
       const workbook = new exceljs.Workbook();
-      const worksheet = workbook.addWorksheet("Payment_Management");
+      const worksheet = workbook.addWorksheet("Payment_Teacher");
 
       const data = result.recordset;
 
@@ -107,13 +101,13 @@ exports.PaymentManagement = async (req, res) => {
       ];
 
       const currentDate = new Date().toISOString().replace(/:/g, "-");
-      const excelFileName = `Payment_Management_${currentDate}.xlsx`;
+      const excelFileName = `Payment_Teacher_${currentDate}.xlsx`;
 
       const excelBuffer = await workbook.xlsx.writeBuffer();
 
       const uploadStream = connectCloud.uploader.upload_stream(
         {
-          folder: process.env.CLOUD_PAYMENT_MANAGEMENT_EXCEL,
+          folder: process.env.CLOUD_PAYMENT_TEACHER_EXCEL,
           resource_type: "auto",
           public_id: excelFileName,
         },

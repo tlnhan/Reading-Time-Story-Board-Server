@@ -53,9 +53,6 @@ router.use("/studyTime", studyTimeRouter);
 const accountUserRouter = require("./admin/user_management/routes");
 router.use("/account/user", accountUserRouter);
 
-// Payment
-const paymentRouter = require("./admin/payment/routes");
-router.use("/payment", paymentRouter);
 
 // Book Contents
 const bookContentsRouter = require("./admin/book/routes");
@@ -140,6 +137,9 @@ router.use("/pointAndPenaltyManagement", pointAndPenaltyManagementRouter);
 // Class Feedback
 const classFeedbackRouter = require("./admin/teacher_management/class_feedback/routes");
 router.use("/classFeedback", classFeedbackRouter);
+// Payment
+const paymentRouter = require("./admin/teacher_management/payment/routes");
+router.use("/payment", paymentRouter);
 
 // Role Management
 const roleManagementRouter = require("./admin/role_management/routes");

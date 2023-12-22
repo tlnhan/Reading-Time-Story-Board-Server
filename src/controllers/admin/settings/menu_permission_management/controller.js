@@ -40,6 +40,12 @@ exports.MenuPermissionManagement = async (req, res) => {
       } else {
         res.status(500).json({ message: "Failed to deleted resource." });
       }
+    } else if (Action === "ROLE") {
+      if (result.returnValue === 0) {
+        res.status(200).json({ message: "Resource deleted successfully." });
+      } else {
+        res.status(500).json({ message: "Failed to deleted resource." });
+      }
     }
   } catch (error) {
     console.log(error);
