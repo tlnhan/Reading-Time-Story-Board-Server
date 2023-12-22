@@ -26,7 +26,7 @@ exports.MenuPermissionManagement = async (req, res) => {
       if (result.returnValue === 0) {
         res.status(200).json({ message: "Resource created successfully." });
       } else {
-        res.status(500).json({ message: "Failed to created resource." });
+        res.status(500).json({ message: "Failed to create resource." });
       }
     } else if (Action === "PUT") {
       if (result.returnValue === 0) {
@@ -38,13 +38,13 @@ exports.MenuPermissionManagement = async (req, res) => {
       if (result.returnValue === 0) {
         res.status(200).json({ message: "Resource deleted successfully." });
       } else {
-        res.status(500).json({ message: "Failed to deleted resource." });
+        res.status(500).json({ message: "Failed to delete resource." });
       }
     } else if (Action === "ROLE") {
       if (result.returnValue === 0) {
-        res.status(200).json({ message: "Resource deleted successfully." });
+        res.status(200).json({ message: "Resource applied successfully." });
       } else {
-        res.status(500).json({ message: "Failed to deleted resource." });
+        res.status(500).json({ message: "Failed to apply resource." });
       }
     }
   } catch (error) {
