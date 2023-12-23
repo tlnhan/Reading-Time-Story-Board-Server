@@ -52,17 +52,17 @@ exports.BoardNotice = async (req, res) => {
       } else {
         res.status(500).json({ message: "Not found materials." });
       }
-    } else  if (Action === "CATEGORY") {
+    } else if (Action === "CATEGORY") {
       if (result.recordset.length > 0) {
         res.status(200).json(result.recordset);
       } else {
         res.status(404).json({ message: "Not found materials." });
       }
-    } else  if (Action === "USAGE") {
-      if (result.recordset.length > 0) {
-        res.status(200).json(result.recordset);
+    } else if (Action === "ADD") {
+      if (result.returnValue === 0) {
+        res.status(200).json({ message: `Resource added successfully.` });
       } else {
-        res.status(404).json({ message: "Not found materials." });
+        res.status(500).json({ message: `Failed to add resource.` });
       }
     }
   } catch (error) {

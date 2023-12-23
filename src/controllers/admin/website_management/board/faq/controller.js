@@ -11,7 +11,7 @@ exports.BoardFAQ = async (req, res) => {
       Usage_Status,
       _Time,
       _Description,
-      Image_Attachment
+      Image_Attachment,
     } = req.body;
 
     const pool = await mssql.connect(connectDatabase);
@@ -26,7 +26,7 @@ exports.BoardFAQ = async (req, res) => {
       .input("_Time", mssql.DateTime, _Time)
       .input("_Description", mssql.NVarChar(250), _Description)
       .input("Image_Attachment", mssql.VarChar(250), Image_Attachment)
-      .execute("sp_Manage_Banner_FAQ");
+      .execute("sp_Manage_Board_FAQ");
 
     if (Action === "GET") {
       if (result.recordset.length > 0) {
@@ -45,6 +45,24 @@ exports.BoardFAQ = async (req, res) => {
         res.status(200).json({ message: `Resource updated successfully.` });
       } else {
         res.status(500).json({ message: `Failed to update resource.` });
+      }
+    } else if (Action === "SEARCH") {
+      if (result.recordset.length > 0) {
+        res.status(200).json(result.recordset);
+      } else {
+        res.status(500).json({ message: "Not found materials." });
+      }
+    } else if (Action === "CATEGORY") {
+      if (result.recordset.length > 0) {
+        res.status(200).json(result.recordset);
+      } else {
+        res.status(404).json({ message: "Not found materials." });
+      }
+    } else if (Action === "ADD") {
+      if (result.returnValue === 0) {
+        res.status(200).json({ message: `Resource added successfully.` });
+      } else {
+        res.status(500).json({ message: `Failed to add resource.` });
       }
     }
   } catch (error) {
