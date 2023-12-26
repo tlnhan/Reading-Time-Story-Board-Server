@@ -44,16 +44,13 @@ router.use(
   menuPermissionManagementRouter
 );
 
-
 // Study_Time
 const studyTimeRouter = require("./study_time/routes");
 router.use("/studyTime", studyTimeRouter);
 
-
 // User Management
 const accountUserRouter = require("./admin/user_management/routes");
 router.use("/account/user", accountUserRouter);
-
 
 // Contents Management
 // Book Contents
@@ -66,7 +63,6 @@ router.use("/curriculumContents", curriculumContentsRouter);
 const curriculumBookRelationshipsRouter = require("./admin/contents_management/curriculum/curriculum_book_relationships/routes");
 router.use("/curriculumBookRelationships", curriculumBookRelationshipsRouter);
 
-
 // Product Management
 // Regular Product
 const regularProductRouter = require("./admin/product_management/regular_product/routes");
@@ -75,16 +71,13 @@ router.use("/regularProduct", regularProductRouter);
 const freeTrialProductRouter = require("./admin/product_management/free_trial_product/routes");
 router.use("/freeTrialProduct", freeTrialProductRouter);
 
-
 // Payment Management
 const paymentManagmentRouter = require("./admin/payment_management/routes");
 router.use("/paymentManagement", paymentManagmentRouter);
 
-
 // Assignment Regular
 const assignmentRegularRouter = require("./admin/assignment/regular/routes");
 router.use("/assignmentRegular", assignmentRegularRouter);
-
 
 // Class Management
 // Regular Class
@@ -93,7 +86,6 @@ router.use("/regularClass", regularClassRouter);
 // Free Trial Class
 const freeTrialClassRouter = require("./admin/class_management/free_trial_class/routes");
 router.use("/freeTrialClass", freeTrialClassRouter);
-
 
 // Website Management
 // Coupon
@@ -112,16 +104,13 @@ router.use("/board/faq", boardFAQRouter);
 const boardSupportRouter = require("./admin/website_management/board/support/routes");
 router.use("/board/support", boardSupportRouter);
 
-
 // Country
 const countryRouter = require("./country/routes");
 router.use("/country", countryRouter);
 
-
 // Authority
 const authorityRouter = require("./admin/authority/routes");
 router.use("/admin/authority", authorityRouter);
-
 
 // Teacher Management
 // Account
@@ -146,9 +135,19 @@ router.use("/classFeedback", classFeedbackRouter);
 const paymentRouter = require("./admin/teacher_management/payment/routes");
 router.use("/payment", paymentRouter);
 
-
 // Role Management
 const roleManagementRouter = require("./admin/role_management/routes");
 router.use("/roleManagement", roleManagementRouter);
+
+// Teacher
+// Dashboard
+const dashboardTeacherRouter = require("./teacher/dashboard/routes");
+router.use("/teacher/dashboard", dashboardTeacherRouter);
+// Assignment Status
+const assginmentASTeacherRouter = require("./teacher/assignment_status/routes");
+router.use("/teacher/assignment", assginmentASTeacherRouter);
+// Class Management
+const regularClassTeacherRouter = require("./teacher/class_management/regular/routes");
+router.use("/teacher/class_management/regular", regularClassTeacherRouter);
 
 module.exports = router;

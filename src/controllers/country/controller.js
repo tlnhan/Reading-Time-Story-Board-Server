@@ -3,7 +3,7 @@ const connectDatabase = require("../../database/mssql");
 
 exports.Country = async (req, res) => {
   try {
-    const { Action, Name, Currency, Id } = req.body;
+    const { Action, Name, Currency, Time_Zone, Id } = req.body;
 
     const pool = await mssql.connect(connectDatabase);
 
@@ -12,6 +12,7 @@ exports.Country = async (req, res) => {
       .input("Action", mssql.VarChar(20), Action)
       .input("Name", mssql.VarChar(20), Name)
       .input("Currency", mssql.VarChar(20), Currency)
+      .input("Time_Zone", mssql.VarChar(20), Time_Zone)
       .input("Id", mssql.Int, Id)
       .execute("sp_Country");
 

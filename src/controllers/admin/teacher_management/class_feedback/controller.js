@@ -7,13 +7,37 @@ require("dotenv").config();
 
 exports.ClassFeedback = async (req, res) => {
   try {
-    const { Action } = req.body;
+    const {
+      Action,
+      Start_Date,
+      End_Date,
+      Paper_No,
+      Team,
+      Teacher,
+      Student,
+      Date,
+      Video,
+      Tl_Feedback,
+      Score,
+      Teacher_Comment,
+    } = req.body;
 
     const pool = await mssql.connect(connectDatabase);
 
     const result = await pool
       .request()
       .input("Action", mssql.VarChar(10), Action)
+      .input("Start_Date", mssql.Date, Start_Date)
+      .input("End_Date", mssql.Date, End_Date)
+      .input("Paper_No", mssql.VarChar(50), Paper_No)
+      .input("Team", mssql.VarChar(50), Team)
+      .input("Teacher", mssql.VarChar(50), Teacher)
+      .input("Student", mssql.VarChar(50), Student)
+      .input("Date", mssql.Date, Date)
+      .input("Video", mssql.VarChar(mssql.MAX), Video)
+      .input("Tl_Feedback", mssql.NVarChar(50), Tl_Feedback)
+      .input("Score", mssql.Int, Score)
+      .input("Teacher_Comment", mssql.NVarChar(mssql.MAX), Teacher_Comment)
       .execute("sp_Class_Feedback");
 
     if (Action === "GET") {
@@ -21,6 +45,12 @@ exports.ClassFeedback = async (req, res) => {
         res.status(200).json(result.recordset);
       } else {
         res.status(404).json({ message: "Not found materials." });
+      }
+    } else if (Action === "POST") {
+      if (result.returnValue === 0) {
+        res.status(200).json({ message: "Resource created successfully." });
+      } else {
+        res.status(500).json({ message: "Failed to created resource." });
       }
     } else if (Action === "DETAIL") {
       if (result.recordset.length > 0) {
@@ -96,6 +126,12 @@ exports.ClassFeedback = async (req, res) => {
       bufferStream.push(null);
 
       bufferStream.pipe(uploadStream);
+    } else if (Action === "SEARCH") {
+      if (result.recordset.length > 0) {
+        res.status(200).json(result.recordset);
+      } else {
+        res.status(500).json({ message: "Not found materials." });
+      }
     }
   } catch (error) {
     console.log(error);

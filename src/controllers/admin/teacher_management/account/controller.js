@@ -289,6 +289,12 @@ exports.AccountTeacher = async (req, res) => {
       bufferStream.push(null);
 
       bufferStream.pipe(uploadStream);
+    } else if (Action === "WH") {
+      if (result.recordset.length > 0) {
+        res.status(200).json(result.recordset);
+      } else {
+        res.status(404).json({ message: "Not found materials." });
+      }
     }
   } catch (error) {
     console.log(error);
