@@ -150,4 +150,16 @@ router.use("/teacher/assignment", assginmentASTeacherRouter);
 const regularClassTeacherRouter = require("./teacher/class_management/regular/routes");
 router.use("/teacher/class_management/regular", regularClassTeacherRouter);
 
+// Assignment Dashboard
+const assignmentDashboardRouter = require("./admin/assignment/dashboard/routes");
+router.use("/assignment/dashboard/month", assignmentDashboardRouter);
+
+// Team
+const teamRouter = require("./admin/team/routes");
+router.use("/team", teamRouter);
+
+// Working Hours Table
+const workingHoursTableRouter = require("./admin/working_hours_table/routes");
+router.use("/workingHoursTable", workingHoursTableRouter);
+
 module.exports = router;

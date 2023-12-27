@@ -11,9 +11,15 @@ exports.WorkingHours = async (req, res) => {
       Teacher,
       Class_Name,
       Teacher_NickName,
-      Today,
       Start_Time,
       End_Time,
+      Mon,
+      Tues,
+      Wed,
+      Thu,
+      Fri,
+      Sat,
+      Sun
     } = req.body;
 
     const pool = await mssql.connect(connectDatabase);
@@ -27,7 +33,13 @@ exports.WorkingHours = async (req, res) => {
       .input("Teacher", mssql.VarChar(50), Teacher)
       .input("Class_Name", mssql.VarChar(50), Class_Name)
       .input("Teacher_NickName", mssql.VarChar(50), Teacher_NickName)
-      .input("Today", mssql.NVarChar(10), Today)
+      .input("Mon", mssql.Bit, Mon)
+      .input("Tues", mssql.Bit, Tues)
+      .input("Wed", mssql.Bit, Wed)
+      .input("Thu", mssql.Bit, Thu)
+      .input("Fri", mssql.Bit, Fri)
+      .input("Sat", mssql.Bit, Sat)
+      .input("Sun", mssql.Bit, Sun)
       .input("Start_Time", mssql.Time, Start_Time)
       .input("End_Time", mssql.Time, End_Time)
       .execute("sp_Working_Hours");
